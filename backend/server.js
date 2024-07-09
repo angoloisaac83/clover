@@ -1,11 +1,9 @@
-import express from 'express';
-import TelegramBot from 'node-telegram-bot-api'; // Use default import for CommonJS module
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-
-dotenv.config();
+const express = require('express');
+const TelegramBot = require('node-telegram-bot-api');
+const fs = require('fs');
+const path = require('path');
+const { fileURLToPath } = require('url');
+require('dotenv').config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,7 +39,7 @@ bot.onText(/\/start/, (msg) => {
     To get this guide, type /help.`, {
       reply_markup: {
         inline_keyboard: [
-          [{ text: 'Play', callback_data: '/play' }]
+          [{ text: 'Play', callback_data: 'play' }]
         ]
       }
     });
@@ -87,6 +85,11 @@ function storeUserData(userData) {
 app.get('/api/bot/start', (req, res) => {
   // Here you might initiate interaction with the bot, or return data if already stored
   res.json({ message: 'Bot interaction triggered' });
+});
+
+// Example endpoint to check if the server is running
+app.get('/', (req, res) => {
+  res.send('Server is running');
 });
 
 // Start server
